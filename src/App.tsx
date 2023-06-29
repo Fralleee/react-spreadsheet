@@ -1,4 +1,4 @@
-import Table from "Table";
+import Table from "components/table/Table";
 import Search from "Search";
 
 function App() {
