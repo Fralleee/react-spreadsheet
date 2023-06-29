@@ -1,46 +1,97 @@
-# Getting Started with Create React App
+# Task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Build a simple spreadsheet application. You wont be recreating excel don't worry. We expect
+a reactive grid of inputs that auto-saves user inputs over time.
 
-## Available Scripts
+You're provided with
 
-In the project directory, you can run:
+- A design in Figma, [located here](https://www.figma.com/file/ID54ipGCsghCKyAHBKgshE/Challenges?node-id=0%3A1&t=tLMYNico0EBK9bHq-1) You will need a figma account to view layers
+- A server as a docker image, [located here](https://hub.docker.com/r/stakingrewards/engineering-frontend-challenge)
 
-### `npm start`
+## What we're looking for
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- UI implementation as close to the design as possible
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Feel free to improve things _you think_ should be better
 
-### `npm test`
+- Auto-saving user input
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Reactive UI
 
-### `npm run build`
+- Performant UI with emphasis on a friendly UX
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Don't confuse the user, if you feel there's a missing design element that aids in this, add it.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+We also don't expect you to stress test the UI, but your solutions
+will give hints to potential performance issues. So be mindful of that.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Build around limitations
 
-### `npm run eject`
+The server is buggy and slow, you still need to aim for an exceptional experience
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Make good decisions
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You'll be evaluated based on your design implementation choices, code implementation choices and
+the solutions you bring to the table
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+> We can only evaluate what you put forth, our evaluation will be incomplete if you provide an incomplete solution. If time is a bottleneck, feel free to ask for more time and we're happy to negotiate... Just like in a real, working environment ;)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Time
 
-## Learn More
+Speaking of time, we feel the task should not take you more than 3 working days.
+We could be wrong.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### The Server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+It's slow, buggy and it's all by design. Your UI implementation has to account for these
+facts, the server will randomly throw errors and will randomly introduce latencies.
+
+The server only allows you to "save" a spreadsheet by sending the values as a CSV blob. This
+will help you implement auto-saving.
+
+The API is [documented here](./api.md)
+
+### The UI
+
+We expect you to compute the spreadsheet formulas on the client side. The simple expression
+language is defined below.
+
+The UI needs to be reactive, as you would expect in any spreadsheet software. Expressions in
+a cell are computed in `onblur` events. Expressions that reference cells for values whose values
+change must result in a recomputation of the expression in the relevant places.
+
+**Expressions**
+
+Any computable expression in the spreadsheet must be prefixed with `=`. The expression
+language supports basic arithmetic expressions as well as value references.
+
+Arithmetics look like this (If you want to go the extra mile, add support for floats)
+
+```
+=1 + 2 * (42.42 / 1)
+```
+
+Value references look like this
+
+```
+=(A..Z)n+
+```
+
+where A to Z are column labels and `n+` is row number. The notation of `n+` simply
+implies that row numbers in value references can have multiple digits. Both `A0`
+and `A10` are valid value references. However, `A00` and `A010` means the same as `A0` and `A10` respectively.
+
+Value references can be used in place of numbers, the letter (column-label) should have no
+space between it and the row-number.
+
+## Technology
+
+We work in React and Nextjs using both Javascript and Typescript. We expect the solution to be React based even if you're
+not exceptionally familiar with React. React, in the end of the day, is a Javascript library. If you know Javascript, then
+we trust you'll find React's documentation easy to follow.
+
+The choice between Javasript or Typescript is up to you.
+
+## Submission
+
+Please submit your working code as a Github repo link with instructions on how to run the project.
