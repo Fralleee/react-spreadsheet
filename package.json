@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "api": "docker pull stakingrewards/engineering-frontend-challenge:latest && docker run --name fe-challenge -d -p 8082:8081 stakingrewards/engineering-frontend-challenge:latest"
   },
   "eslintConfig": {
     "extends": [
