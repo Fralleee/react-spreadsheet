@@ -1,13 +1,26 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
-
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-      },
+    borderRadius: {
+      DEFAULT: "4px",
+      large: "5px",
+    },
+    gap: {
+      1: "1px",
+      4: "4px",
+    },
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      white: "#ffffff",
+      input: "#f3f3f3",
+      header: "#efefef",
+      cell: "#fafafa",
+      "cell-border": "#d5d5d5",
+    },
+    container: {
+      center: true,
     },
   },
   plugins: [],
