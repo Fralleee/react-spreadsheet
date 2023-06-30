@@ -10,7 +10,7 @@ const DataGrid = ({ columnIds, columnWidths }: DataGridProps) => {
   return (
     <div className="flex flex-col gap-4">
       {rows.map((_, rowIndex) => (
-        <div key={rowIndex} className="flex gap-1 bg-cell py-1">
+        <div key={rowIndex} className="flex gap-1 rounded bg-cell py-1">
           {columnIds.map(columnId => (
             <GridCell key={columnId} columnId={columnId} width={columnWidths[columnId]} />
           ))}

@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ columnIds, columnWidths, setWidth }: HeaderProps) => {
   return (
-    <div className="mb-3 flex bg-header">
+    <div className="mb-3 flex rounded bg-header">
       {columnIds.map(columnId => (
         <HeaderCell key={columnId} columnId={columnId} width={columnWidths[columnId]} setWidth={setWidth} />
       ))}

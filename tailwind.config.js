@@ -17,7 +17,7 @@ module.exports = {
       input: "#f3f3f3",
       header: "#efefef",
       cell: "#fafafa",
-      "cell-border": "#d5d5d5",
+      "cell-border": "#e8e8e8",
     },
     container: {
       center: true,
