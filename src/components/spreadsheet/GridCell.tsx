@@ -4,11 +4,13 @@ import useInputKeyboard from "hooks/useInputKeyboardBehaviour";
 import { useEffect, useState } from "react";
 
 interface GridCellProps {
+  rowIndex: number;
   columnId: string;
   width: number | undefined;
+  onCellEdit: (rowIndex: number) => void;
 }
 
-const GridCell = ({ columnId, width }: GridCellProps) => {
+const GridCell = ({ rowIndex, columnId, width, onCellEdit }: GridCellProps) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const toggleEdit = () => {
@@ -20,13 +22,25 @@ const GridCell = ({ columnId, width }: GridCellProps) => {
   useEffect(() => {
     if (editMode) {
       inputRef.current?.focus();
+      onCellEdit(rowIndex);
+    } else {
+      onCellEdit(-1);
     }
-  }, [editMode, inputRef]);
+  }, [editMode, inputRef, onCellEdit, rowIndex]);
 
   return (
-    <div className="relative border-r border-cell-border bg-cell first:rounded-s last:rounded-e  last:border-r-0" style={{ width }}>
-      <input ref={inputRef} type="text" defaultValue={"1000"} disabled={!editMode} className={`w-full bg-transparent py-2 text-center ${editMode ? "" : "hidden"}`} />
-      <div className={`w-full py-2 text-center ${editMode ? "hidden" : ""}`}>${inputRef.current?.value}</div>
+    <div
+      className={`relative border-r border-cell-border first:rounded-s last:rounded-e last:border-r-0 ${
+        editMode ? "scale-y-cell-large border-none bg-cell-edit-bg shadow-cell-edit" : ""
+      }`}
+      style={{ width }}>
+      <input
+        ref={inputRef}
+        type="text"
+        defaultValue={"1000"}
+        className={`h-full w-full bg-transparent text-center outline-none ${editMode ? "scale-y-input-reverse" : "hidden"}`}
+      />
+      <div className={`grid h-full w-full items-center text-center align-middle ${editMode ? "hidden" : ""}`}>${inputRef.current?.value}</div>
       <button className="absolute right-4 top-1/2 -translate-y-1/2 opacity-30 hover:opacity-100" onClick={toggleEdit}>
         <FontAwesomeIcon icon={faPen} />
       </button>
