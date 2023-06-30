@@ -30,16 +30,11 @@ const GridCell = ({ rowIndex, columnId, width, onCellEdit }: GridCellProps) => {
 
   return (
     <div
-      className={`relative border-r border-cell-border first:rounded-s last:rounded-e last:border-r-0 ${
-        editMode ? "scale-y-cell-large border-none bg-cell-edit-bg shadow-cell-edit" : ""
+      className={`relative border-r border-border-cell first:rounded-s last:rounded-e last:border-r-0 ${
+        editMode ? "scale-y-lg-cell border-none bg-cell-edit shadow-edit-cell" : ""
       }`}
       style={{ width }}>
-      <input
-        ref={inputRef}
-        type="text"
-        defaultValue={"1000"}
-        className={`h-full w-full bg-transparent text-center outline-none ${editMode ? "scale-y-input-reverse" : "hidden"}`}
-      />
+      <input ref={inputRef} type="text" defaultValue={"1000"} className={`h-full w-full bg-transparent text-center outline-none ${editMode ? "scale-y-sm-input" : "hidden"}`} />
       <div className={`grid h-full w-full items-center text-center align-middle ${editMode ? "hidden" : ""}`}>${inputRef.current?.value}</div>
       <button className="absolute right-4 top-1/2 -translate-y-1/2 opacity-30 hover:opacity-100" onClick={toggleEdit}>
         <FontAwesomeIcon icon={faPen} />

@@ -16,7 +16,7 @@ const DataGrid = ({ columnIds, columnWidths }: DataGridProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-lg">
       {rows.map((_, rowIndex) => (
         <GridRow
           key={rowIndex}

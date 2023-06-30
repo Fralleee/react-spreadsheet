@@ -13,16 +13,16 @@ const GridRow = ({ rowIndex, rowState, columnIds, columnWidths, onCellEdit }: Ro
   const getRowStyle = (state: RowState) => {
     switch (state) {
       case RowState.Edit:
-        return "bg-row-edit-bg";
+        return "bg-row-edit";
       case RowState.Error:
-        return "border-2 border-row-error-border bg-row-error-bg shadow-row-error-shadow";
+        return "border-2 border-border-row-error bg-row-error shadow-error-row";
       default:
-        return "bg-row-normal-bg";
+        return "bg-row-normal";
     }
   };
 
   return (
-    <div className={`box-border flex h-12 gap-1 rounded ${getRowStyle(rowState)}`}>
+    <div className={`box-border flex h-12 gap-sm rounded ${getRowStyle(rowState)}`}>
       {columnIds.map(columnId => (
         <GridCell key={columnId} rowIndex={rowIndex} columnId={columnId} width={columnWidths[columnId]} onCellEdit={onCellEdit} />
       ))}
