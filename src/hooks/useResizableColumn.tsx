@@ -23,7 +23,6 @@ const useResizableColumn = ({ columnId, width, setWidth }: UseResizableColumnArg
   );
 
   const handleMouseUp = useCallback(() => {
-    console.log("handleMouseUp");
     setIsResizing(false);
   }, []);
 
