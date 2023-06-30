@@ -1,15 +1,14 @@
-import React from "react";
 import HeaderCell from "./HeaderCell";
 
 interface HeaderProps {
   columnIds: string[];
-  columnWidths: { [columnId: string]: number };
+  columnWidths: ColumnWidths;
   setWidth: (columnId: string, width: number) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ columnIds, columnWidths, setWidth }) => {
+const Header = ({ columnIds, columnWidths, setWidth }: HeaderProps) => {
   return (
-    <div className="flex mb-3 bg-header">
+    <div className="mb-3 flex bg-header">
       {columnIds.map(columnId => (
         <HeaderCell key={columnId} columnId={columnId} width={columnWidths[columnId]} setWidth={setWidth} />
       ))}

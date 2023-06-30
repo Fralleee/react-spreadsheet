@@ -1,13 +1,11 @@
-import React from "react";
-
 interface GridCellProps {
   columnId: string;
   width: number | undefined;
 }
 
-const GridCell: React.FC<GridCellProps> = ({ columnId, width }) => {
+const GridCell = ({ columnId, width }: GridCellProps) => {
   return (
-    <div className="h-10 grid items-center text-center first:rounded-s last:rounded-e border-r last:border-r-0 border-cell-border  bg-cell" style={{ width }}>
+    <div className="grid h-10 items-center border-r border-cell-border bg-cell text-center first:rounded-s last:rounded-e  last:border-r-0" style={{ width }}>
       $1000
     </div>
   );
