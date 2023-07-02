@@ -6,13 +6,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 interface GridCellProps {
   rowIndex: number;
-  columnId: string;
+  columnIndex: number;
+  value: number;
   width: number | undefined;
   onCellEdit: (rowIndex: number) => void;
 }
 
-const GridCell = ({ rowIndex, columnId, width, onCellEdit }: GridCellProps) => {
-  const { setDirty } = useDataStore();
+const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellProps) => {
+  const { setCell, setDirty } = useDataStore();
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const toggleEdit = () => {
@@ -31,6 +32,8 @@ const GridCell = ({ rowIndex, columnId, width, onCellEdit }: GridCellProps) => {
   }, [editMode, inputRef, onCellEdit, rowIndex]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newCell: GridCell = { columnIndex, rowIndex, value: parseFloat(event.target.value) };
+    setCell(newCell);
     setDirty();
   };
 
@@ -43,11 +46,11 @@ const GridCell = ({ rowIndex, columnId, width, onCellEdit }: GridCellProps) => {
       <input
         ref={inputRef}
         type="text"
-        defaultValue={"1000"}
+        value={value}
         onChange={handleInputChange}
         className={`h-full w-full bg-transparent text-center outline-none ${editMode ? "scale-y-sm-input" : "hidden"}`}
       />
-      <div className={`grid h-full w-full items-center text-center align-middle ${editMode ? "hidden" : ""}`}>${inputRef.current?.value}</div>
+      <div className={`grid h-full w-full items-center text-center align-middle ${editMode ? "hidden" : ""}`}>{inputRef.current?.value}</div>
       <button className="absolute right-4 top-1/2 -translate-y-1/2 opacity-30 hover:opacity-100" onClick={toggleEdit}>
         <FontAwesomeIcon icon={faPen} />
       </button>

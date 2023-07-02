@@ -1,16 +1,16 @@
 import HeaderCell from "./HeaderCell";
 
 interface HeaderProps {
-  columnIds: string[];
-  columnWidths: ColumnWidths;
-  setWidth: (columnId: string, width: number) => void;
+  headers: GridHeader[];
+  columnWidths: number[];
+  setWidth: any;
 }
 
-const Header = ({ columnIds, columnWidths, setWidth }: HeaderProps) => {
+const Header = ({ headers, columnWidths, setWidth }: HeaderProps) => {
   return (
     <div className="mb-3 flex rounded bg-header">
-      {columnIds.map(columnId => (
-        <HeaderCell key={columnId} columnId={columnId} width={columnWidths[columnId]} setWidth={setWidth} />
+      {headers.map((header, index) => (
+        <HeaderCell key={header.index} width={columnWidths[index]} header={header} setWidth={setWidth} />
       ))}
     </div>
   );
