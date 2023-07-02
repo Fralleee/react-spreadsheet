@@ -27,9 +27,11 @@ module.exports = {
       "cell-edit": "#cbdcff",
       "row-normal": "#fafafa",
       "row-edit": "#dbe7ff",
-      "row-error": "#ffefef",
       "border-cell": "#e8e8e8",
-      "border-row-error": "#af3434",
+      success: "#c8ffcb",
+      error: "#ffefef",
+      "error-border": "#af3434",
+      default: "#1d4ed8",
     },
     container: {
       center: true,

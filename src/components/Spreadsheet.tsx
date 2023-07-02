@@ -5,7 +5,7 @@ import { MIN_WIDTH } from "data/constants";
 
 const Spreadsheet = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [columnIds] = useState<string[]>(() => ["A", "B", "C"]);
+  const [columnIds] = useState<string[]>(["A", "B", "C"]);
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
 
   useLayoutEffect(() => {

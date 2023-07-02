@@ -20,7 +20,7 @@ const DataGrid = ({ columnIds, columnWidths }: DataGridProps) => {
       {rows.map((_, rowIndex) => (
         <GridRow
           key={rowIndex}
-          rowState={editedRow === rowIndex ? RowState.Edit : rowIndex % 2 === 0 ? RowState.Error : RowState.Normal}
+          rowState={editedRow === rowIndex ? RowState.Edit : rowIndex === 3 ? RowState.Error : RowState.Normal}
           rowIndex={rowIndex}
           columnIds={columnIds}
           columnWidths={columnWidths}
