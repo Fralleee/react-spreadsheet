@@ -1,5 +1,13 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
+type Status = "IN_PROGRESS" | "DONE";
+
+type StatusResponse = {
+  status: Status;
+  done_at?: string;
+  id?: string;
+};
+
 export async function postSave(): Promise<StatusResponse> {
   // httpStatus: 200, body: { "status": "DONE" }
   // httpStatus: 200, body: { "id": "randomID", "status": "IN_PROGRESS", "done_at": "timestamp in RFC3339 format" }

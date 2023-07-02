@@ -2,20 +2,40 @@ import { faTimesCircle, faSpinner, faSave } from "@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { postSave, getStatus } from "api/spreadsheet";
+import { extractDelayFromDateAndNow } from "components/utils/dateUtils";
 import { useDataStore } from "hooks/useDataStore";
 import { useStatusStore } from "hooks/useStatusStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function SaveButton() {
   const { setStatus } = useStatusStore();
   const { clearDirty } = useDataStore();
-  const saveMutation = useMutation({ mutationFn: postSave });
+  const [statusId, setStatusId] = useState<string | null>(null);
+  const [isOperationLoading, setIsOperationLoading] = useState(false);
+
+  const saveMutation = useMutation({
+    mutationFn: postSave,
+    onSuccess: data => {
+      if (data.status === "DONE") return;
+      if (data.done_at) {
+        const delay = extractDelayFromDateAndNow(new Date(data.done_at));
+        setIsOperationLoading(true);
+        setTimeout(
+          () => {
+            setStatusId(data.id!);
+            setIsOperationLoading(false);
+          },
+          delay > 0 ? delay : 0
+        );
+      }
+    },
+  });
 
   const { data, isError: statusError } = useQuery({
-    queryKey: ["status", saveMutation.data?.id],
-    queryFn: () => getStatus(saveMutation.data?.id as string),
-    refetchInterval: data => (data?.status === "DONE" ? false : 5000),
-    enabled: !!saveMutation.data?.id,
+    queryKey: ["status", statusId],
+    queryFn: () => getStatus(statusId as string),
+    refetchInterval: data => (data?.status === "DONE" ? false : 1000),
+    enabled: !!statusId,
   });
 
   const isError = saveMutation.isError || statusError;
@@ -36,7 +56,7 @@ function SaveButton() {
     saveMutation.mutate();
   };
 
-  const isLoading = saveMutation.isLoading || data?.status === "IN_PROGRESS";
+  const isLoading = isOperationLoading || saveMutation.isLoading || data?.status === "IN_PROGRESS";
 
   return (
     <button
