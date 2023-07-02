@@ -7,13 +7,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 interface GridCellProps {
   rowIndex: number;
   columnIndex: number;
-  value: number;
+  value: CellValue;
   width: number | undefined;
   onCellEdit: (rowIndex: number) => void;
 }
 
 const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellProps) => {
-  const { setCell, setDirty } = useDataStore();
+  const { setCell, setDirty, grid, computedGrid } = useDataStore();
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const toggleEdit = () => {
@@ -32,11 +32,21 @@ const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellP
   }, [editMode, inputRef, onCellEdit, rowIndex]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newCell: GridCell = { columnIndex, rowIndex, value: parseFloat(event.target.value) };
+    const inputValue = event.target.value;
+    let newValue;
+
+    if (!isNaN(Number(inputValue))) {
+      newValue = Number(inputValue);
+    } else {
+      newValue = inputValue;
+    }
+
+    const newCell: GridCell = { columnIndex, rowIndex, value: newValue };
     setCell(newCell);
     setDirty();
   };
 
+  const presentationValue = computedGrid[rowIndex][columnIndex].toString();
   return (
     <div
       className={`relative border-r border-border-cell first:rounded-s last:rounded-e last:border-r-0 ${
@@ -46,11 +56,11 @@ const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellP
       <input
         ref={inputRef}
         type="text"
-        value={value}
-        onChange={handleInputChange}
+        defaultValue={value}
+        onBlur={handleInputChange}
         className={`h-full w-full bg-transparent text-center outline-none ${editMode ? "scale-y-sm-input" : "hidden"}`}
       />
-      <div className={`grid h-full w-full items-center text-center align-middle ${editMode ? "hidden" : ""}`}>{inputRef.current?.value}</div>
+      <div className={`grid h-full w-full items-center text-center align-middle ${editMode ? "hidden" : ""}`}>{presentationValue}</div>
       <button className="absolute right-4 top-1/2 -translate-y-1/2 opacity-30 hover:opacity-100" onClick={toggleEdit}>
         <FontAwesomeIcon icon={faPen} />
       </button>

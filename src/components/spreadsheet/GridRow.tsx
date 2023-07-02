@@ -3,7 +3,7 @@ import GridCell from "./GridCell";
 
 interface RowProps {
   rowIndex: number;
-  data: number[];
+  data: CellValue[];
   rowState: RowState;
   columnWidths: number[];
   onCellEdit: (rowIndex: number) => void;

@@ -10,5 +10,7 @@ interface GridHeader {
 interface GridCell {
   rowIndex: number;
   columnIndex: number;
-  value: number;
+  value: CellValue;
 }
+
+type CellValue = number | string;
