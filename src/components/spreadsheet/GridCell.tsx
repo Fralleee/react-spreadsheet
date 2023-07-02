@@ -13,7 +13,7 @@ interface GridCellProps {
 }
 
 const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellProps) => {
-  const { setCell, setDirty, grid, computedGrid } = useDataStore();
+  const { setCell, setDirty, computedGrid } = useDataStore();
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const toggleEdit = () => {
