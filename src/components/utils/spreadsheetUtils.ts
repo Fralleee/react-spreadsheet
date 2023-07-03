@@ -16,7 +16,7 @@ export function createScope(grid: CellValue[][]): Record<string, number> {
 }
 
 export function parseExpression(expression: string, scope: any) {
-  expression = expression.slice(1);
+  expression = expression.slice(1).toUpperCase();
   const replacedExpression = expression.replace(/[A-Z]+\d+/g, match => {
     const cellValue = scope[match];
     return cellValue;
