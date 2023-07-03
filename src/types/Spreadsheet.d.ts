@@ -14,3 +14,5 @@ interface GridCell {
 }
 
 type CellValue = number | string;
+
+type CellDependencies = Record<string, Set<string>>;

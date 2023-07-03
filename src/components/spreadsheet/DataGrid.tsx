@@ -29,9 +29,7 @@ const DataGrid = ({ columnWidths }: DataGridProps) => {
           />
         ))}
       </div>
-      <code>
-        <pre>{JSON.stringify(grid, null, 2)}</pre>
-      </code>
+      <pre>{JSON.stringify(grid, null, 2)}</pre>
     </>
   );
 };

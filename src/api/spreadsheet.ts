@@ -1,7 +1,7 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-export async function postSave(): Promise<StatusResponse> {
-  const response = await fetch(`${API_URL}/save`, { method: "POST" });
+export async function postSave(csv: Blob): Promise<StatusResponse> {
+  const response = await fetch(`${API_URL}/save`, { method: "POST", body: csv });
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }

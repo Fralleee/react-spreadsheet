@@ -2,14 +2,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { postSave, getStatus } from "api/spreadsheet";
 import { extractDelayFromDateAndNow } from "components/utils/dateUtils";
 import { useCallback, useState } from "react";
+import { useDataStore } from "./useDataStore";
+import { exportAsCsv } from "components/utils/spreadsheetUtils";
 
 export function useSave() {
+  const { grid } = useDataStore();
   const queryClient = useQueryClient();
   const [statusId, setStatusId] = useState<string | null>(null);
   const [isOperationLoading, setIsOperationLoading] = useState(false);
 
   const saveMutation = useMutation({
-    mutationFn: postSave,
+    mutationFn: () => postSave(exportAsCsv(grid)),
     onSuccess: data => {
       if (data.status === "DONE") {
         return;

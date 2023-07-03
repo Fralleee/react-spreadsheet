@@ -16,18 +16,21 @@ export function createScope(grid: CellValue[][]): Record<string, number> {
 }
 
 export function parseExpression(expression: string, scope: any) {
-  if (expression[0] !== "=") {
-    throw new Error("Invalid expression");
-  }
-
   expression = expression.slice(1);
   const replacedExpression = expression.replace(/[A-Z]+\d+/g, match => {
     const cellValue = scope[match];
-    if (cellValue === undefined) {
-      throw new Error(`Cell ${match} not found`);
-    }
     return cellValue;
   });
 
-  return evaluate(replacedExpression);
+  try {
+    return evaluate(replacedExpression) || "#ERROR!";
+  } catch (e) {
+    return "#ERROR!";
+  }
+}
+
+export function exportAsCsv(grid: CellValue[][]): Blob {
+  const csvData = grid.map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
+  const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+  return blob;
 }
