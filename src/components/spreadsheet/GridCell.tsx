@@ -11,10 +11,9 @@ interface GridCellProps {
   value: CellValue;
   width: number | undefined;
   setRowState: (state: RowState) => void;
-  triggerRowCheck: () => void;
 }
 
-const GridCell = ({ rowIndex, columnIndex, value, width, setRowState, triggerRowCheck }: GridCellProps) => {
+const GridCell = ({ rowIndex, columnIndex, value, width, setRowState }: GridCellProps) => {
   const { setCell, setDirty, computedGrid } = useDataStore();
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -28,10 +27,8 @@ const GridCell = ({ rowIndex, columnIndex, value, width, setRowState, triggerRow
     if (editMode) {
       inputRef.current?.focus();
       setRowState(RowState.Edit);
-    } else {
-      triggerRowCheck();
     }
-  }, [columnIndex, computedGrid, editMode, inputRef, rowIndex, setRowState, triggerRowCheck]);
+  }, [columnIndex, computedGrid, editMode, inputRef, rowIndex, setRowState]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
