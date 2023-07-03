@@ -15,7 +15,7 @@ git clone https://github.com/Fralleee/react-spreadsheet.git
 2. Install dependencies:
 
 ```shell
-cd spreadsheet-app
+cd react-spreadsheet
 yarn install
 ```
 
