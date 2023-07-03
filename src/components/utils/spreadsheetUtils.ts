@@ -26,7 +26,11 @@ export function parseExpression(expression: string, scope: any) {
   });
 
   try {
-    return evaluate(replacedExpression) || "#ERROR!";
+    const result = evaluate(replacedExpression);
+    if (!isFinite(result)) {
+      return "#ERROR!";
+    }
+    return result;
   } catch (e) {
     return "#ERROR!";
   }
