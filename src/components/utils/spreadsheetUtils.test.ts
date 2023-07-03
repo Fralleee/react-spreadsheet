@@ -1,4 +1,4 @@
-import { createScope, parseExpression, exportAsCsv } from "./spreadsheetUtils";
+import { createScope, parseExpression } from "./spreadsheetUtils";
 
 describe("createScope", () => {
   it("should create a correct scope from the grid", () => {
