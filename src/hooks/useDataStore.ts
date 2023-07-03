@@ -45,7 +45,7 @@ export const useDataStore = create<DataStore>(set => ({
       for (let i = 0; i < newGrid.length; i++) {
         for (let j = 0; j < newGrid[0].length; j++) {
           const cell = newGrid[i][j];
-          if (typeof cell === "string" && cell[0] === "=") {
+          if (typeof cell === "string" && cell.startsWith("=")) {
             newComputedGrid[i][j] = parseExpression(cell, scope);
           } else {
             newComputedGrid[i][j] = cell;

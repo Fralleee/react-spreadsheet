@@ -13,10 +13,8 @@ const Spreadsheet = () => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.getBoundingClientRect().width;
       const initialWidth = Math.max(containerWidth / headers.length, MIN_WIDTH);
-      const widths = [];
-      for (let i = 0; i < headers.length; i++) {
-        widths.push(initialWidth);
-      }
+      const widths = Array(headers.length).fill(initialWidth);
+
       setColumnWidths(widths);
     }
   }, [headers]);
