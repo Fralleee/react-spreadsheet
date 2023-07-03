@@ -1,5 +1,6 @@
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { RowState } from "enums/RowState";
 import { useDataStore } from "hooks/useDataStore";
 import useInputKeyboard from "hooks/useInputKeyboardBehaviour";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -9,10 +10,11 @@ interface GridCellProps {
   columnIndex: number;
   value: CellValue;
   width: number | undefined;
-  onCellEdit: (rowIndex: number) => void;
+  setRowState: (state: RowState) => void;
+  triggerRowCheck: () => void;
 }
 
-const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellProps) => {
+const GridCell = ({ rowIndex, columnIndex, value, width, setRowState, triggerRowCheck }: GridCellProps) => {
   const { setCell, setDirty, computedGrid } = useDataStore();
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -25,11 +27,11 @@ const GridCell = ({ rowIndex, columnIndex, value, width, onCellEdit }: GridCellP
   useEffect(() => {
     if (editMode) {
       inputRef.current?.focus();
-      onCellEdit(rowIndex);
+      setRowState(RowState.Edit);
     } else {
-      onCellEdit(-1);
+      triggerRowCheck();
     }
-  }, [editMode, inputRef, onCellEdit, rowIndex]);
+  }, [columnIndex, computedGrid, editMode, inputRef, rowIndex, setRowState, triggerRowCheck]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
